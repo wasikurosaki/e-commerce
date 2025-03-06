@@ -299,6 +299,7 @@ export default function Home() {
             <div className=" w-3/4 border-[#1C1F24] border-t-[2px] bg-[#1C1F24] overflow-auto    ">
               {cards.map((card, index) => (
                 <div
+                  key={index}
                   className={`w-${
                     isExpanded ? "8/9" : "full"
                   } flex flex-row justify-between mb-10 transition-all duration-300 ease-in-out`}
