@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 
 export default function Home() {
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("Top Deals");
 
   const tabs = ["Trending", "Top Deals", "New Listings", "Price Lowered"];
@@ -347,7 +346,7 @@ export default function Home() {
                           d="M5.5 2.08108C4.5 -0.272008 1 -0.0213821 1 2.98614C1 5.99366 5.5 8.5 5.5 8.5C5.5 8.5 10 5.99366 10 2.98614C10 -0.0213821 6.5 -0.272008 5.5 2.08108Z"
                           stroke="white"
                           strokeLinecap="round"
-                          strokeLinjoin="round"
+                          strokeLinejoin="round"
                         />
                       </svg>
                     </button>
