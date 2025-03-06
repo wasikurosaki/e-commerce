@@ -321,7 +321,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex flex-row h-auto justify-between gap-2 ">
-            <div className=" w-3/4 border-[#1C1F24] border-t-[2px] bg-[#1C1F24] overflow-auto    ">
+            <div className=" w-3/4 border-[#1C1F24] border-t-[2px] bg-[#0D0D0D] overflow-auto   ">
               {cards.map((card, index) => (
                 <div
                   key={index}
@@ -330,7 +330,7 @@ export default function Home() {
                   } flex flex-row justify-between mb-10 transition-all duration-300 ease-in-out`}
                 >
                   <div
-                    className="h-[91px] py-4 w-6/7 bg-[#0D0D0D] rounded-3xl flex flex-row gap-2 px-2"
+                    className="h-[91px] py-4 w-6/7 bg-[#0D0D0D] flex flex-row gap-2 px-2  border-[#1C1F24] border-b-[2px] "
                     onClick={() => toggleExpand(index)}
                   >
                     <div className="w-[48px] h-[46px] bg-white flex items-center justify-center rounded-lg">
@@ -430,7 +430,7 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <div className=" w-1/7  bg-[#1C1F24] flex flex-col gap-4 text-white font-Lato ">
+                  <div className="w-1/7 bg-[#1C1F24] flex flex-col gap-4 text-white font-Lato rounded-l-2xl">
                     <div className="flex flex-col items-start text-white mr-2 px-2">
                       <div className="flex flex-col items-start w-full">
                         <p className="text-[#565C67] text-xs  font-bold">
