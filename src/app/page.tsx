@@ -1,16 +1,41 @@
 "use client";
 
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
 export default function Home() {
+  interface Cards {
+    title: string;
+    icon: ReactNode;
+  }
   // const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("Top Deals");
 
   const tabs = ["Trending", "Top Deals", "New Listings", "Price Lowered"];
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [expandedCardIndex, setExpandedCardIndex] = useState<number | null>(
+    null
+  );
+  const [selectedProducts, setSelectedProducts] = useState<Cards[]>([]);
 
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
+  const [counter, setCounter] = useState(0);
+  const handleClick = (productIndex: number) => {
+    // Get the actual product object from your cards array
+    const selectedProduct = cards[productIndex];
+
+    // Add the product object to your selected products
+    setSelectedProducts((prevSelected) => [...prevSelected, selectedProduct]);
+
+    // Optionally increment counter if you still need it
+    setCounter(counter + 1);
+  };
+
+  const toggleExpand = (index: number) => {
+    if (expandedCardIndex === index) {
+      // If clicking the already expanded card, collapse it
+      setExpandedCardIndex(null);
+    } else {
+      // Otherwise expand the clicked card
+      setExpandedCardIndex(index);
+    }
   };
 
   const cards = [
@@ -295,18 +320,18 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="flex flex-row h-[80vh] justify-between gap-2 ">
+          <div className="flex flex-row h-auto justify-between gap-2 ">
             <div className=" w-3/4 border-[#1C1F24] border-t-[2px] bg-[#1C1F24] overflow-auto    ">
               {cards.map((card, index) => (
                 <div
                   key={index}
                   className={`w-${
-                    isExpanded ? "8/9" : "full"
+                    expandedCardIndex === index ? "8/9" : "full"
                   } flex flex-row justify-between mb-10 transition-all duration-300 ease-in-out`}
                 >
                   <div
                     className="h-[91px] py-4 w-6/7 bg-[#0D0D0D] rounded-3xl flex flex-row gap-2 px-2"
-                    onClick={toggleExpand}
+                    onClick={() => toggleExpand(index)}
                   >
                     <div className="w-[48px] h-[46px] bg-white flex items-center justify-center rounded-lg">
                       {card.icon}
@@ -425,7 +450,7 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  {isExpanded && (
+                  {expandedCardIndex === index && (
                     <div className=" w-[8rem] flex flex-row gap-1 justify-center ">
                       <div className="flex flex-col items-center justify-center gap-1">
                         <button className="flex items-center justify-center w-[65px] h-full bg-[#5533FF] rounded-bl-[5px] rounded-br-[5px] rounded-tl-[5px] rounded-tr-[10px]">
@@ -459,7 +484,10 @@ export default function Home() {
                           </svg>
                         </button>
                       </div>
-                      <button className=" flex items-center justify-center w-full h-full bg-[#5533FF] rounded-bl-[5px] rounded-br-[5px] rouneded-tl-[5px] rounded-tr-[10px]">
+                      <button
+                        className=" flex items-center justify-center w-full h-full bg-[#5533FF] rounded-bl-[5px] rounded-br-[5px] rouneded-tl-[5px] rounded-tr-[10px]"
+                        onClick={() => handleClick(index)}
+                      >
                         <svg
                           width="18"
                           height="18"
@@ -484,47 +512,19 @@ export default function Home() {
                 Cart
               </h1>
               <p className="text-Lato text-md text-[#787E8E]">
-                Items Selected: 0
+                Items Selected: {counter}
               </p>
-              <div className="flex flex-col gap-2 border-l-1 border-t-1 rounded-md border-[#1C1F24] h-full">
-                <div className="flex flex-row gap-2 p-2">
-                  <div className="bg-white w-1/4 h-[49px] flex items-center justify-center rounded-md">
-                    <svg
-                      width="22"
-                      height="24"
-                      viewBox="0 0 11 12"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M10.1647 4.09121C10.0899 4.14521 8.76913 4.83768 8.76913 6.37744C8.76913 8.15842 10.4497 8.78848 10.5 8.80408C10.4923 8.84248 10.233 9.66697 9.61393 10.5071C9.06191 11.2463 8.48538 11.9844 7.60834 11.9844C6.7313 11.9844 6.50559 11.5104 5.49312 11.5104C4.50645 11.5104 4.15563 12 3.3534 12C2.55116 12 1.9914 11.3159 1.34781 10.4758C0.602322 9.48935 0 7.9568 0 6.50225C0 4.16922 1.63027 2.93189 3.23474 2.93189C4.08727 2.93189 4.79794 3.45275 5.33319 3.45275C5.84265 3.45275 6.63715 2.90069 7.60705 2.90069C7.97463 2.90069 9.29536 2.93189 10.1647 4.09121ZM7.1466 1.91299C7.54772 1.47015 7.83147 0.855686 7.83147 0.241224C7.83147 0.156016 7.82373 0.069607 7.80696 0C7.15434 0.0228023 6.3779 0.40444 5.90972 0.909691C5.54213 1.29853 5.19905 1.91299 5.19905 2.53585C5.19905 2.62946 5.21582 2.72307 5.22356 2.75308C5.26483 2.76028 5.3319 2.76868 5.39897 2.76868C5.98452 2.76868 6.72098 2.40384 7.1466 1.91299Z"
-                        fill="#0D0D0D"
-                      />
-                    </svg>
+              <div className="flex flex-col gap-2 border-l-1 border-t-1 rounded-md border-[#1C1F24] min-h-[20rem] max-h-[20rem] overflow-y-auto">
+                {selectedProducts.map((product, index) => (
+                  <div className="flex flex-row gap-2 p-2" key={index}>
+                    <div className="bg-white w-[60px] h-[49px] flex items-center justify-center rounded-md">
+                      {product.icon} {/* Use the product's icon */}
+                    </div>
+                    <h1 className="text-Lato text-xs text-[#787E8E]">
+                      {product.title} {/* Use the product's title */}
+                    </h1>
                   </div>
-                  <h1 className="text-Lato text-sm text-[#787E8E]">
-                    14” MacBook Pro w/ M3 Pro Chip 18GB RAM 512 GB SSD (A2992)
-                  </h1>
-                </div>
-                <div className="flex flex-row gap-2 p-2">
-                  <div className="bg-white w-1/4 h-[49px] flex items-center justify-center rounded-md">
-                    <svg
-                      width="22"
-                      height="24"
-                      viewBox="0 0 11 12"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M10.1647 4.09121C10.0899 4.14521 8.76913 4.83768 8.76913 6.37744C8.76913 8.15842 10.4497 8.78848 10.5 8.80408C10.4923 8.84248 10.233 9.66697 9.61393 10.5071C9.06191 11.2463 8.48538 11.9844 7.60834 11.9844C6.7313 11.9844 6.50559 11.5104 5.49312 11.5104C4.50645 11.5104 4.15563 12 3.3534 12C2.55116 12 1.9914 11.3159 1.34781 10.4758C0.602322 9.48935 0 7.9568 0 6.50225C0 4.16922 1.63027 2.93189 3.23474 2.93189C4.08727 2.93189 4.79794 3.45275 5.33319 3.45275C5.84265 3.45275 6.63715 2.90069 7.60705 2.90069C7.97463 2.90069 9.29536 2.93189 10.1647 4.09121ZM7.1466 1.91299C7.54772 1.47015 7.83147 0.855686 7.83147 0.241224C7.83147 0.156016 7.82373 0.069607 7.80696 0C7.15434 0.0228023 6.3779 0.40444 5.90972 0.909691C5.54213 1.29853 5.19905 1.91299 5.19905 2.53585C5.19905 2.62946 5.21582 2.72307 5.22356 2.75308C5.26483 2.76028 5.3319 2.76868 5.39897 2.76868C5.98452 2.76868 6.72098 2.40384 7.1466 1.91299Z"
-                        fill="#0D0D0D"
-                      />
-                    </svg>
-                  </div>
-                  <h1 className="text-Lato text-sm text-[#787E8E]">
-                    14” MacBook Pro w/ M3 Pro Chip 18GB RAM 512 GB SSD (A2992)
-                  </h1>
-                </div>
+                ))}
               </div>
               <div className="flex flex-col gap-2 border-l-1 border-t-1 rounded-md border-[#1C1F24] h-full">
                 <h1 className="text-Lato text-2xl font-semibold text-white p-6 ">
