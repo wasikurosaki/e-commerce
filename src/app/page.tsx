@@ -440,7 +440,7 @@ export default function Home() {
                           <span className="text-xs">18</span>
                         </div>
                       </div>
-                      <div className="flex flex-col items-start w-full">
+                      <div className="flex flex-col items-start w-full mb-[4px]">
                         <p className="text-[#565C67] text-sx font-bold ">
                           Price
                         </p>
@@ -451,7 +451,7 @@ export default function Home() {
                     </div>
                   </div>
                   {expandedCardIndex === index && (
-                    <div className=" w-[8rem] flex flex-row gap-1 justify-center ">
+                    <div className=" w-[8rem] bg-[#1C1F24] flex flex-row gap-1 justify-center ">
                       <div className="flex flex-col items-center justify-center gap-1">
                         <button className="flex items-center justify-center w-[65px] h-full bg-[#5533FF] rounded-bl-[5px] rounded-br-[5px] rounded-tl-[5px] rounded-tr-[10px]">
                           <svg
